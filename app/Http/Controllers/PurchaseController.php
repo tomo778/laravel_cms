@@ -48,7 +48,7 @@ class PurchaseController extends Controller
     {
         $this->purchaseService->addSessionData();
         $this->purchaseService->purchase();
-        $this->sendMail();
+        //$this->sendMail();
         $this->purchaseService->addOrderHistory();
         $this->purchaseService->saveSession();
         return view('purchase.finish');

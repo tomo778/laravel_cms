@@ -27,7 +27,7 @@
 <div class="mb-3">
     <form action="{{ route('contact_finish') }}" method="post">
         {{ csrf_field() }}
-        <button type="submit" class="btn btn-primary">送信</button>
+        <button disabled type="submit" class="btn btn-primary">送信</button>
     </form>
 </div>
 @endsection

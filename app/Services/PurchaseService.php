@@ -82,7 +82,8 @@ class PurchaseService
     private function decrementQuantity(): void
     {
         foreach (session('cart.items') as $k => $v) {
-            Product::where('id', $k)
+            Product::lockForUpdate()
+                ->where('id', $k)
                 ->decrement('num', $v['quantity']);
         }
     }

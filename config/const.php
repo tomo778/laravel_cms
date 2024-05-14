@@ -15,7 +15,7 @@ return [
 	|
 	*/
 
-	'site_name' => 'portfolio site',
+	'site_name' => 'site name',
 	'mail' => 'test@gmail.com',
 	'url' => 'http://localhost/',
 
