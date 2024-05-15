@@ -23,7 +23,7 @@ class mysqlBatch extends Command
     public function handle()
     {
 
-        $filename = "backup-" . now()->format('Y-m-d') . ".gz";
+        $filename = "backup-" . now()->format('Ymdhi') . ".gz";
 
         $command = "mysqldump --user=" . env('DB_USERNAME') . " --password=" . env('DB_PASSWORD')
             . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . "  | gzip > "
