@@ -14,7 +14,7 @@
     現在カートはからです。
 </div>
 @else
-<table class="table">
+<table class="cart table">
     <thead>
         <tr>
             <th scope="col" width="100"></th>
@@ -35,7 +35,7 @@
             <td><a href="{{ route('product', ['id' => $v['id']]) }}">{{$v['title']}}</a></td>
             <td>{{number_format($v['price'])}}円</td>
             <td>
-                <select name="quantity" class="form-select" data-id="{{$v['id']}}">
+                <select name="quantity" class="quantity form-select" data-id="{{$v['id']}}">
                     @foreach (Config::get('const.quantity') as $k2 => $v2)
                     <option value="{{$k2}}" @if (@$v['quantity']==$k2) selected @endif>{{$v2}}</option>
                     @endforeach
@@ -60,6 +60,7 @@
     @endguest
     @endif
 </div>
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
     .fullOverlay {
         position: fixed;
@@ -72,54 +73,4 @@
         z-index: 9999;
     }
 </style>
-<script src=" {{ mix('js/admin/app.js') }} "></script>
-<script>
-    $(function() {
-        $('.del_btn').on('click', function(event) {
-            event.preventDefault();
-            $('html').addClass('fullOverlay');
-            $('select[name=quantity]').attr('disabled', true);
-            $.ajax({
-                url: "{{ route('cart_remove') }}",
-                type: 'post',
-                data: {
-                    '_token': "{{ csrf_token() }}",
-                    'id': $(this).data('id')
-                },
-                timeout: 10000,
-                success: function(result, textStatus, xhr) {
-                    window.location.href = "{{ route('cart') }}";
-                },
-                error: function(data) {
-                    $('.del_btn').attr('disabled', false);
-                    alert('エラーが発生しました。');
-                    window.location.href = "{{ route('cart') }}";
-                }
-            });
-        });
-        $('select[name=quantity]').on('change', function(event) {
-            event.preventDefault();
-            $('html').addClass('fullOverlay');
-            $('select[name=quantity]').attr('disabled', true);
-            $.ajax({
-                url: "{{ route('cart_quantity') }}",
-                type: 'post',
-                data: {
-                    '_token': "{{ csrf_token() }}",
-                    'id': $(this).data('id'),
-                    'quantity': $(this).val(),
-                },
-                timeout: 10000,
-                success: function(result, textStatus, xhr) {
-                    window.location.href = "{{ route('cart') }}";
-                },
-                error: function(data) {
-                    $('.del_btn').attr('disabled', false);
-                    alert('エラーが発生しました。');
-                    window.location.href = "{{ route('cart') }}";
-                }
-            });
-        });
-    });
-</script>
 @endsection
